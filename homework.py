@@ -35,6 +35,7 @@ HOMEWORK_VERDICTS = {
     'rejected': 'Работа проверена: у ревьюера есть замечания.'
 }
 
+
 def check_tokens():
     """Проверяет доступность переменных окружения."""
     logging.info('Проверка доступности каждого отдельного токена')
@@ -43,15 +44,16 @@ def check_tokens():
         'telegram_token': TELEGRAM_TOKEN,
         'telegram_chat_id': TELEGRAM_CHAT_ID,
     }
-    
+
     for name, token in tokens.items():
         if token is None:
             message = f'{name} недоступен'
             logging.critical(message)
             return False
-    message = 'Токены доступны'       
+    message = 'Токены доступны'   
     logging.info(message)
     return message
+
 
 def send_message(bot, message):
     """Отправляет сообщение в Telegram чат."""
@@ -82,6 +84,7 @@ def get_api_answer(timestamp):
     response = HOMEWORK_VERDICTS.json()
     return response
 
+
 def check_response(response):
     """Проверяет ответ API на соответствие документации."""
     if type(response) is not dict:
@@ -102,8 +105,9 @@ def check_response(response):
         return message
     return homework
 
+
 def parse_status(homework):
-    """Извлекает из информации о конкретной домашней работе статус этой работы."""
+    """Извлекает из информации о конкретной домашке ее статус."""
     if 'status' not in homework:
         raise Exception('В ответе нет ключа "status"')
     if 'homework_name' not in homework:
@@ -122,7 +126,7 @@ def main():
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     STATUS = ''
     if not check_tokens():
-        raise 
+        raise
     while True:
         try:
             response = get_api_answer(timestamp)
@@ -139,7 +143,6 @@ def main():
             logger.error(message)
             send_message(bot, message)
         time.sleep(RETRY_PERIOD)
-
 
 
 if __name__ == '__main__':
