@@ -50,7 +50,7 @@ def check_tokens():
             message = f'{name} недоступен'
             logging.critical(message)
             return False
-    message = 'Токены доступны'   
+    message = 'Токены доступны'
     logging.info(message)
     return message
 
