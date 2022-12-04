@@ -38,7 +38,6 @@ HOMEWORK_VERDICTS = {
 }
 
 
-
 def check_tokens():
     """Проверяет доступность переменных окружения."""
     logging.info('Проверка доступности токенов')
@@ -81,9 +80,9 @@ def check_response(response):
         raise TypeError('Ответ API не словарь')
     homeworks = response.get('homeworks')
     if 'homeworks' not in response:
-        raise KeyError('Не найден ключ homeworks' )
+        raise KeyError('Не найден ключ homeworks')
     if 'current_date' not in response:
-        raise KeyError('Не найден ключ current_date' )
+        raise KeyError('Не найден ключ current_date')
     if not isinstance(homeworks, list):
         raise TypeError('Получен не список')
     return homeworks
