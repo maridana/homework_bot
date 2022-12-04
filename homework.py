@@ -1,6 +1,7 @@
 import logging
 import os
 import requests
+import sys
 import telegram
 import time
 
@@ -78,21 +79,14 @@ def check_response(response):
     """Проверяет ответ API на соответствие документации."""
     if not isinstance(response, dict):
         raise TypeError('Ответ API не словарь')
-    try:
-        homeworks = response.get('homeworks')
-    except KeyError:
-        message = 'Ошибка словаря по ключу homeworks'
-        logger.error(message)
-        return message
+    homeworks = response.get('homeworks')
+    if 'homeworks' not in response:
+        raise KeyError('Не найден ключ homeworks' )
+    if 'current_date' not in response:
+        raise KeyError('Не найден ключ current_date' )
     if not isinstance(homeworks, list):
         raise TypeError('Получен не список')
-    try:
-        homework = homeworks[0]
-    except IndexError:
-        message = 'Нет отправленных на проверку домашек'
-        logger.error(message)
-        return message
-    return homework
+    return homeworks
 
 
 def parse_status(homework):
