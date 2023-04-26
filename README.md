@@ -25,7 +25,8 @@ https://practicum.yandex.ru/api/user_api/homework_statuses/
 Клонируем проект:
 
 ```bash
-git clone 
+git clone
+```
 
 Переходим в папку с ботом.
 
